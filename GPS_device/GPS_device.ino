@@ -109,7 +109,7 @@ void loop()
 
           float currentSpeed = gps.speed.kmph();
           float deltaSpeed = currentSpeed - oldSpeed;
-          if (currentSpeed > 1 && oldSpeed < 0 && currentSpeed < 30 && isDrag == false){
+          if (currentSpeed > 1 && oldSpeed < 0 && isDrag == false){
             isDrag = true;
             isDrag60 = true;
             dragTimeStart = millis();
@@ -129,7 +129,7 @@ void loop()
               isDrag60 = false;
             }
             
-          }else if (currentSpeed < 2){
+          }else if (currentSpeed < 1){
             isDrag = false;
             isDrag60 = false;
             dragTime100 = 0;
