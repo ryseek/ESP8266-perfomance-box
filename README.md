@@ -1,6 +1,6 @@
 # ESP8266-perfomance-box
 
-The project was created [ryseek](https://github.com/ryseek)
+The project was created by [ryseek](https://github.com/ryseek)
 
 # My plans:
 - [x] Make working prototype
