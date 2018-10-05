@@ -104,12 +104,12 @@ void loop()
   
   
 
-  String disp = " " + String(gps.speed.kmph()) + " km/h";
+  String disp = "" + String(gps.speed.kmph()) + " km/h";
   String sats = String(gps.satellites.value());
 
           float currentSpeed = gps.speed.kmph();
           float deltaSpeed = currentSpeed - oldSpeed;
-          if (currentSpeed > 1 && oldSpeed < 0 && isDrag == false){
+          if (currentSpeed > 1 && oldSpeed < 1 && isDrag == false){
             isDrag = true;
             isDrag60 = true;
             dragTimeStart = millis();
