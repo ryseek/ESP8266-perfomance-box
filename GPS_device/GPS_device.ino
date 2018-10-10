@@ -16,20 +16,16 @@
 const char *ssid = "ryseek's iPhone";
 const char *password = "titan6679";
 
-ESP8266WebServer server(80);
-
-
-#define OLED_RESET LED_BUILTIN
-Adafruit_SSD1306 display(OLED_RESET);
-
 static const int RXPin = 15, TXPin = 13;
 static const uint32_t GPSBaud = 57600;
 
-// The TinyGPS++ object
-TinyGPSPlus gps;
 
-// The serial connection to the GPS device
+ESP8266WebServer server(80);
+TinyGPSPlus gps;
 SoftwareSerial ss(13, 15, false, 512);
+
+#define OLED_RESET LED_BUILTIN
+Adafruit_SSD1306 display(OLED_RESET);
 
 unsigned long dragTime100;
 unsigned long dragTime60;
@@ -37,16 +33,16 @@ unsigned long dragTimeStart;
 const int resultsCount = 100;
 float results60[resultsCount];
 float results100[resultsCount];
-
-unsigned long framesTime;
-unsigned long frames;
-
 bool isDrag = false;
 bool isDrag60 = false;
 bool firstRun = true;
 int screenType = 0;
 int screenCount = 2;
 float oldSpeed;
+
+unsigned long framesTime;
+unsigned long frames;
+
 int buzzerPin = 14;
 int buttonPin = 12;
 
@@ -57,13 +53,10 @@ void setup()
   ss.println("$PMTK220,100*2F"); // $PMTK220,200*2C -  5hz rate // $PMTK220,100*2F - 10HZ
   ss.println("$PMTK314,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*28"); // only GPS signal
 
-
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   display.setRotation(2);
   display.display();
   Wire.setClock(800000L);
-
-  pinMode(buzzerPin, OUTPUT);
 
   //server
   WiFi.mode(WIFI_STA);
@@ -80,6 +73,7 @@ void setup()
   server.on("/", handleRoot);
   server.begin();
 
+  pinMode(buzzerPin, OUTPUT);
   pinMode(buttonPin, INPUT_PULLUP);
 }
 
@@ -91,20 +85,8 @@ void loop()
     framesTime = millis();
     firstRun = false;
   }
-  //bool button = digitalRead(buttonPin);
-  //Serial.println("Button: " + String(button));
-  //gps.encode(ss.read());
-  //printInt(gps.satellites.value(), gps.satellites.isValid(), 5);
 
-  //printFloat(gps.speed.kmph(), gps.speed.isValid(), 6, 2);
-
-
-  //printInt(gps.charsProcessed(), true, 6);
-  //printInt(gps.sentencesWithFix(), true, 10);
-  //printInt(gps.failedChecksum(), true, 9);
   Serial.println(String(gps.charsProcessed()));
-
-
 
   String disp = "" + String(gps.speed.kmph()) + " km/h";
   String sats = String(gps.satellites.value());
@@ -156,7 +138,7 @@ void loop()
       display.setTextColor(WHITE);
       display.setTextSize(2);
       display.setCursor(0, 0);
-      
+
       display.println("" + String(currentSpeed) + "km/h");
       // display.println("isDrag : " + String(isDrag));
       display.println("60:" + String(float(dragTime60) / 1000) + "s");
@@ -167,7 +149,7 @@ void loop()
       display.println(message + ", FPS: " + fps);
       display.display();
       break;
-      
+
     case 0:
       display.clearDisplay();
       display.setTextColor(WHITE);
@@ -176,7 +158,7 @@ void loop()
       display.println("IP:" + WiFi.localIP().toString());
       display.display();
       break;
-      
+
     default:
       break;
   }
@@ -196,7 +178,7 @@ void buttonCheck() {
   }
 }
 
-void incementScreen(){
+void incementScreen() {
   screenType++;
   if (screenType == screenCount)
     screenType = 0;
