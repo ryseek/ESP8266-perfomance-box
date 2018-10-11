@@ -1,5 +1,7 @@
 # ESP8266-perfomance-box
 
+![Header](https://github.com/ryseek/ESP8266-perfomance-box/raw/master/Header.png)
+
 The project was created by [ryseek](https://github.com/ryseek)
 
 # Schematic diagram
