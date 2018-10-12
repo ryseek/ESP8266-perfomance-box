@@ -220,7 +220,7 @@ String createResultsTableHTML() {
     if (results60[i] == results100[i] && results60[i] == float(0))
       continue;
     HTML += "<tr> <td><i class='fa fa-clock-o w3-text-black w3-large'></i></td>";
-    HTML += "<td><i>" + String(results60[i]) + "</i></td> <td><i>" + String(results100[i]) + "</i></td> </tr>";
+    HTML += "<td><i>" + String(results60[i] / 1000) + "</i></td> <td><i>" + String(results100[i] / 1000) + "</i></td> </tr>";
   }
   return HTML;
 }
